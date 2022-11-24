@@ -329,8 +329,26 @@ function App(props) {
                 and give you a form to interact with it locally
             */}
 
-          <Contract
+          {/* <Contract
             name="YourContract"
+            price={price}
+            signer={userSigner}
+            provider={localProvider}
+            address={address}
+            blockExplorer={blockExplorer}
+            contractConfig={contractConfig}
+          /> */}
+          <Contract
+            name="OurToken"
+            price={price}
+            signer={userSigner}
+            provider={localProvider}
+            address={address}
+            blockExplorer={blockExplorer}
+            contractConfig={contractConfig}
+          />
+          <Contract
+            name="OurDAO"
             price={price}
             signer={userSigner}
             provider={localProvider}

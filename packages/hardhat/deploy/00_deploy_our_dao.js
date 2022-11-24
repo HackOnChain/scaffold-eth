@@ -17,16 +17,48 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deployer } = await getNamedAccounts();
   const chainId = await getChainId();
 
-  await deploy("YourContract", {
-    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+  await deploy("OurToken", {
     from: deployer,
-    // args: [ "Hello", ethers.utils.parseEther("1.5") ],
+    args: [
+      "TKN",
+      "Token"
+    ],
     log: true,
     waitConfirmations: 5,
   });
 
-  // Getting a previously deployed contract
-  const YourContract = await ethers.getContract("YourContract", deployer);
+  const OurToken = await ethers.getContract("OurToken", deployer);
+
+  await deploy("OurTimelockController", {
+    from: deployer,
+    args: [
+      100,
+      [
+        deployer
+      ],
+      [
+        deployer
+      ]
+    ],
+    log: true,
+    waitConfirmations: 5,
+  });
+
+  const OurTimelockController = await ethers.getContract("OurTimelockController", deployer);
+
+  await deploy("OurDAO", {
+    from: deployer,
+    args: [
+      "DAO",
+      OurToken.address,
+      OurTimelockController.address
+    ],
+    log: true,
+    waitConfirmations: 5,
+  });
+
+  const OurDAO = await ethers.getContract("OurDAO", deployer);
+
   /*  await YourContract.setPurpose("Hello");
   
     // To take ownership of yourContract using the ownable library uncomment next line and add the 
@@ -79,4 +111,4 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   //   console.error(error);
   // }
 };
-module.exports.tags = ["YourContract"];
+module.exports.tags = ["OurToken", "OurDAO"];
