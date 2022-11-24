@@ -20,6 +20,19 @@ contract OurDAO is Governor, GovernorCompatibilityBravo, GovernorVotes, Governor
         GovernorTimelockControl(_timelock)
     {}
 
+    // custom logic
+
+    function castVote(uint256 proposalId, uint8 support)
+        public
+        virtual
+        override(IGovernor, Governor)
+        returns (uint256)
+    {
+        return super.castVote(proposalId, support);
+    }
+
+    // from template
+
     function votingDelay() public pure override returns (uint256) {
         return 6575; // 1 day
     }

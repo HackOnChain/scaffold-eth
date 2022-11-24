@@ -254,6 +254,13 @@ module.exports = {
         mnemonic: mnemonic(),
       },
     },
+    qtestnet: {
+      url: "https://rpc.qtestnet.org",
+      chainId: 35443,
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
   },
   solidity: {
     compilers: [

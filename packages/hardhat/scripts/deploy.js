@@ -26,7 +26,30 @@ And learn more here: https://www.npmjs.com/package/hardhat-deploy
 const main = async () => {
   console.log("\n\n 📡 Deploying...\n");
 
-  const yourContract = await deploy("YourContract"); // <-- add in constructor args like line 19 vvvv
+  const [deployer] = await ethers.getSigners();
+
+  const ourToken = await deploy("OurToken", [
+    "TKN",
+    "Token"
+  ]);
+
+  const ourTimelockController = await deploy("OurTimelockController", [
+    100,
+    [
+      deployer.address
+    ],
+    [
+      deployer.address
+    ]
+  ]);
+
+  const ourDAO = await deploy("OurDAO", [
+    "DAO",
+    ourToken.address,
+    ourTimelockController.address
+  ]);
+
+  // const yourContract = await deploy("YourContract"); // <-- add in constructor args like line 19 vvvv
   // use for local token bridging
   // const mockToken = await deploy("MockERC20") // <-- add in constructor args like line 19 vvvv
 
